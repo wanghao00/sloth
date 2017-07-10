@@ -38,4 +38,4 @@ LABELS = (
     },
     
 )
-COLORS = {"C1": Qt.green, "C2": Qt.blue}
+COLORS = {"C1": QColor(255, 0, 255), "C2": Qt.blue}
