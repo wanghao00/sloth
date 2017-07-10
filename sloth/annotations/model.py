@@ -8,6 +8,7 @@ import copy
 from collections import MutableMapping
 from PyQt4.QtGui import QTreeView, QItemSelection, QItemSelectionModel, QSortFilterProxyModel, QBrush
 from PyQt4.QtCore import QModelIndex, QAbstractItemModel, Qt, pyqtSignal, QVariant, QObject
+from sloth.conf import config
 
 LOG = logging.getLogger(__name__)
 
@@ -537,6 +538,7 @@ class FrameModelItem(ImageModelItem, KeyValueModelItem):
 class AnnotationModelItem(KeyValueModelItem):
     def __init__(self, annotation):
         KeyValueModelItem.__init__(self, properties=annotation)
+        self.type = annotation['class']
 
     # Delegated from QAbstractItemModel
     def data(self, role=Qt.DisplayRole, column=0):
@@ -555,10 +557,12 @@ class AnnotationModelItem(KeyValueModelItem):
             return self._annotation
         return ModelItem.data(self, role, column)
 
+
     def getColor(self):
         if self.isUnconfirmed():
             return Qt.red
-        return None
+        return config.COLORS.get(self.type, None)
+        # return config.COLORS.setdefault(self.type, None)
 
 
 class KeyValueRowModelItem(ModelItem):
