@@ -15,7 +15,7 @@ from sloth.gui.controlbuttons import ControlButtonWidget
 from sloth.conf import config
 from sloth.core.utils import import_callable
 from sloth.annotations.model import AnnotationTreeView, FrameModelItem, ImageFileModelItem, CopyAnnotations, InterpolateRange
-from sloth import APP_NAME, ORGANIZATION_DOMAIN
+from sloth import APP_NAME, ORGANIZATION_DOMAIN, VERSION
 from sloth.utils.bind import bind, compose_noargs
 
 GUIDIR=os.path.join(os.path.dirname(__file__))
@@ -129,7 +129,8 @@ class MainWindow(QMainWindow):
 
         img = self.labeltool.getImage(new_image)
 
-        if img == None:
+        # if img == None:
+        if img is None:
             self.controls.setFilename("")
             self.selectionmodel.setCurrentIndex(new_image.index(), QItemSelectionModel.ClearAndSelect|QItemSelectionModel.Rows)
             return
@@ -480,6 +481,6 @@ class MainWindow(QMainWindow):
              <p>This labeling application for computer vision research
              was developed at the CVHCI research group at KIT.
              <p>For more details, visit our homepage: <a href="%s">%s</a>"""
-              % (APP_NAME, __version__, ORGANIZATION_DOMAIN, ORGANIZATION_DOMAIN))
+              % (APP_NAME, VERSION, ORGANIZATION_DOMAIN, ORGANIZATION_DOMAIN))
 
 
