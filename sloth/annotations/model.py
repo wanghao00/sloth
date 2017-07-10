@@ -557,7 +557,6 @@ class AnnotationModelItem(KeyValueModelItem):
             return self._annotation
         return ModelItem.data(self, role, column)
 
-
     def getColor(self):
         if self.isUnconfirmed():
             return Qt.red

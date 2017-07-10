@@ -316,6 +316,9 @@ class AnnotationScene(QGraphicsScene):
                 for item in self.selectedItems():
                     item.keyPressEvent(event)
 
+        # Ctrl / Shift modify annotation items, Sence set not allow move
+        if event.modifiers() and (Qt.ShiftModifier or Qt.ControlModifier):
+            return
         QGraphicsScene.keyPressEvent(self, event)
 
     #
