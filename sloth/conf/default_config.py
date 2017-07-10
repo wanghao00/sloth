@@ -71,6 +71,8 @@ LABELS = (
         'text':     'Polygon',
     },
 )
+# Different labels with different colors
+COLORS = {}
 
 # HOTKEYS
 #
