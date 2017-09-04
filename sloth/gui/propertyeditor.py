@@ -139,7 +139,10 @@ class DefaultAttributeHandler(QGroupBox, AbstractAttributeHandler):
         # val = self._inputField.text()  # not ok in save annotations to file
         self.addValue(val, True)
         for item in self._current_items:
-            item[self._attribute] = val
+            if u'' == val:
+                item.pop(self._attribute)
+            else:
+                item[self._attribute] = val
         self.updateButtons()
         self.updateInputField()
         self._inputField.clearFocus()
