@@ -57,8 +57,8 @@ class DefaultAttributeHandler(QGroupBox, AbstractAttributeHandler):
         self._shortcuts = {}
 
         # Setup GUI
-        self._layout = FloatingLayout()
-        self.setLayout(self._layout)
+        # self._layout = FloatingLayout()
+        # self.setLayout(self._layout)
         self._buttons = {}
 
         # Add interface elements
@@ -86,8 +86,12 @@ class DefaultAttributeHandler(QGroupBox, AbstractAttributeHandler):
 
     def updateValues(self, values):
         if isinstance(values, type):
+            self._layout = QVBoxLayout()
+            self.setLayout(self._layout)
             self.addInputField(values)
         else:
+            self._layout = FloatingLayout()
+            self.setLayout(self._layout)
             for val in values:
                 v = val
                 shortcut = None
