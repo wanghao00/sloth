@@ -135,8 +135,8 @@ class DefaultAttributeHandler(QGroupBox, AbstractAttributeHandler):
         '''val = str(self._inputField.text()) # code error
         UnicodeEncodeError: 'ascii' codec can't encode characters
         '''
-        # val = unicode(self._inputField.text().toUtf8(), 'utf-8', 'ignore') # ok
-        val = self._inputField.text()  # ok
+        val = unicode(self._inputField.text().toUtf8(), 'utf-8', 'ignore') # ok
+        # val = self._inputField.text()  # not ok in save annotations to file
         self.addValue(val, True)
         for item in self._current_items:
             item[self._attribute] = val

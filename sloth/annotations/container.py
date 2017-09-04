@@ -312,7 +312,7 @@ class JsonContainer(AnnotationContainer):
         Overwritten to write JSON files.
         """
         f = open(fname, "w")
-        json.dump(annotations, f, indent=4, separators=(',', ': '), sort_keys=True)
+        json.dump(annotations, f, indent=4, separators=(',', ': '), sort_keys=True, ensure_ascii=False)
         f.write("\n")
 
 
