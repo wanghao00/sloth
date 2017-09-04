@@ -3,6 +3,9 @@ LABELS = (
     {
         'attributes': {
             'class':      'C1',
+            # 'type':       'rect',
+            # 'comment':    ["Martin", "Mika"]
+            'comment':    str
         },
         'inserter': 'sloth.items.RectItemInserter',
         'item':     'sloth.items.RectItem',

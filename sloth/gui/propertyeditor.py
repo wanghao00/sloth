@@ -132,7 +132,11 @@ class DefaultAttributeHandler(QGroupBox, AbstractAttributeHandler):
         return self._insertIndex >= 0
 
     def onInputFieldReturnPressed(self):
-        val = str(self._inputField.text())
+        '''val = str(self._inputField.text()) # code error
+        UnicodeEncodeError: 'ascii' codec can't encode characters
+        '''
+        # val = unicode(self._inputField.text().toUtf8(), 'utf-8', 'ignore') # ok
+        val = self._inputField.text()  # ok
         self.addValue(val, True)
         for item in self._current_items:
             item[self._attribute] = val
@@ -184,10 +188,12 @@ class DefaultAttributeHandler(QGroupBox, AbstractAttributeHandler):
             self._inputField.clear()
             selected_values = self.getSelectedValues()
             if len(selected_values) > 1:
-                self._inputField.setPlaceholderText(", ".join(selected_values))
+                self._inputField.setPlaceholderText(u", ".join(selected_values))
             elif len(selected_values) == 1:
                 it = iter(selected_values)
-                self._inputField.setText(next(it))
+                # self._inputField.setText(next(it))
+                # self._inputField.setText(u''+next(it))
+                self._inputField.setText(unicode(next(it), 'utf-8', 'ignore'))
 
     def updateButtons(self):
         selected_values = self.getSelectedValues()
