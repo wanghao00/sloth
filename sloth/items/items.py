@@ -217,8 +217,8 @@ class BaseItem(QAbstractGraphicsShapeItem):
         return QRectF(0, 0, 0, 0)
 
     def setColor(self, color):
-        self.setPen(color)
-        self.setBrush(color)
+        self.setPen(color[0])
+        self.setBrush(QBrush(*color))  # QBrush(color, Qt.NoBrush)
         self.update()
 
     def paint(self, painter, option, widget=None):
@@ -479,6 +479,23 @@ class RectItem(BaseItem):
             self.updateModel()
             event.accept()
 
+class MyRectItem(RectItem):
+
+    def paint(self, painter, option, widget=None):
+        BaseItem.paint(self, painter, option, widget)
+
+        pen = self.pen()
+        brush = self.brush()
+        if self.isSelected():
+            pen.setStyle(Qt.DashLine)
+            brush.setStyle(Qt.NoBrush)
+            # when item selected, set a different style brush
+            # brush = QBrush(QColor(0, 255, 255), Qt.FDiagPattern) #Dense4Pattern NoBrush
+            # painter.setBrush(brush)
+
+        painter.setPen(pen)
+        painter.setBrush(brush)
+        painter.drawRect(self.boundingRect())
 
 class MultiPointItem(BaseItem):
     def __init__(self, model_item=None, prefix="pointlist", parent=None):

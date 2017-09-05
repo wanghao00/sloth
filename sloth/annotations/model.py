@@ -74,7 +74,7 @@ class ModelItem:
         if role == Qt.BackgroundRole:
             c = self.getColor()
             if c is not None:
-                return QBrush(c)
+                return QBrush(c[0], Qt.Dense5Pattern)
         if role == ItemRole:
             return self
         else:
