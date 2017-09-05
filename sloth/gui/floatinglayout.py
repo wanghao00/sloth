@@ -1,5 +1,6 @@
 from PyQt4.QtCore import Qt, QRect, QSize, QPoint
-from PyQt4.QtGui  import QLayout, QSizePolicy, QWidgetItem
+from PyQt4.QtGui  import QLayout, QSizePolicy, QWidgetItem, \
+    QDialog, QVBoxLayout, QHBoxLayout, QButtonGroup, QRadioButton, QPushButton, QDesktopWidget, QWidget
 
 
 class FloatingLayout(QLayout):
@@ -103,3 +104,67 @@ class FloatingLayout(QLayout):
     def sizeHint(self):
         return self.minimumSize()
 
+
+class ClsDialog(QDialog):
+    """
+    Control Button dont support 'tab' 
+    radioButtons layout not perfect, because of the floatingLayout 
+    """
+    def __init__(self, parent=None, clss=[], cls=''):
+        QDialog.__init__(self, parent)
+        self._clss = clss
+        self._cls = cls
+        self.cls = cls
+        self.index = clss.index(cls)
+        self.initUI()
+        self.center()
+        self.show()
+
+    def initUI(self):
+        self.setWindowTitle('Label class Modify')
+        self.resize(300, 120)
+
+        self.mainLayout = QVBoxLayout()  # layout for the central widget
+        self.setLayout(self.mainLayout)
+        floatLayout = FloatingLayout()
+        self.group = QButtonGroup(self)
+
+        for i, cls in enumerate(self._clss):
+            radio = QRadioButton(cls)
+            radio.setChecked(cls == self._cls)
+            # radio.clicked.connect(self.getChecked)
+            radio.setFocusPolicy(Qt.NoFocus)
+            self.group.addButton(radio, i)
+            floatLayout.addWidget(radio)
+        floatLayout.setMargin(15)
+        self.group.buttonClicked.connect(self.getChecked)
+        self.mainLayout.addLayout(floatLayout)
+
+        hbox = QHBoxLayout()
+        _cancel = QPushButton('&Cancel')
+        _ok = QPushButton('&OK')
+        _cancel.setFocusPolicy(Qt.NoFocus)
+        _ok.setFocusPolicy(Qt.NoFocus)
+        _cancel.clicked.connect(self.reject)
+        _ok.clicked.connect(self.accept)
+        hbox.addWidget(_cancel)
+        hbox.addWidget(_ok)
+        self.mainLayout.addLayout(hbox)
+        self.group.button(self.index).setFocus()
+
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
+
+    def getChecked(self):
+        self.index = self.group.checkedId()
+        self.cls = self.group.checkedButton().text()
+
+    def keyPressEvent(self, event):
+        # two value '\r\n'
+        if event.key() in [Qt.Key_Enter, Qt.Key_Return]:
+            self.accept()
+        else:
+            QWidget.keyPressEvent(self, event)

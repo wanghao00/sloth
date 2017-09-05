@@ -51,4 +51,4 @@ LABELS = (
 12=Qt.BDiagPattern
 13=Qt.FDiagPattern
 '''
-COLORS = {"C1": (QColor(255, 0, 255), 12), "C2": (Qt.blue, 0), "C3": (QColor(0xCD, 0x37, 0x00), 0)}
+COLORS = {"C1": (QColor(255, 0, 255), 0), "C2": (Qt.blue, 0), "C3": (QColor(0xCD, 0x37, 0x00), 0)}

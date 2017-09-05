@@ -97,6 +97,7 @@ HOTKEYS = (
     ('ESC',       lambda lt: lt.exitInsertMode(),            'Exit insert mode'),
     ('Shift+l',   lambda lt: lt.currentImage().setUnlabeled(False), 'Mark current image as labeled'),
     ('Shift+c',   lambda lt: lt.currentImage().confirmAll(), 'Mark all annotations in image as confirmed'),
+    ('Shift+z',   lambda lt: lt.modifySelectedAnnotations(), 'Modify selected annotations'),
 )
 
 # CONTAINERS

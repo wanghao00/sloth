@@ -1,5 +1,7 @@
+# -×- coding: utf-8 -*-
 """This is the AnnotationScene module"""
 from sloth.items import *
+from sloth.gui.floatinglayout import *
 from sloth.core.exceptions import InvalidArgumentException
 from sloth.annotations.model import AnnotationModelItem
 from sloth.utils import toQImage
@@ -121,6 +123,22 @@ class AnnotationScene(QGraphicsScene):
         modelitems_to_delete = dict((id(item.modelItem()), item.modelItem()) for item in self.selectedItems())
         for item in modelitems_to_delete.values():
             item.delete()
+
+    def modifySelectedItems(self, mainwindow=None):
+        modelitems_to_modify = dict((id(item.modelItem()), item.modelItem()) for item in self.selectedItems())
+        num = len(modelitems_to_modify.values())
+        if 0 == num:
+            QMessageBox.information(mainwindow, u'提示', u'请至少选择一个对象！',
+                                            QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+            return
+        for item in modelitems_to_modify.values():
+            classes = [_dict['attributes']['class'] for _dict in config.LABELS ]
+            cls = ClsDialog(mainwindow, classes, item.type)
+            if cls.exec_():
+                if classes[cls.index] != item.type:
+                    item.type = classes[cls.index]
+                    item.update({'class': item.type})
+                cls.destroy()
 
     def onInserterFinished(self):
         self.sender().inserterFinished.disconnect(self.onInserterFinished)

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 This is the core labeltool module.
 """
@@ -436,6 +437,10 @@ class LabelTool(QObject):
     def deleteSelectedAnnotations(self):
         if self._mainwindow is not None:
             self._mainwindow.scene.deleteSelectedItems()
+
+    def modifySelectedAnnotations(self):
+        if self._mainwindow is not None:
+            self._mainwindow.scene.modifySelectedItems(self._mainwindow)
 
     def exitInsertMode(self):
         if self._mainwindow is not None:
