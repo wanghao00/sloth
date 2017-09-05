@@ -143,7 +143,7 @@ class DefaultAttributeHandler(QGroupBox, AbstractAttributeHandler):
         # val = self._inputField.text()  # not ok in save annotations to file
         self.addValue(val, True)
         for item in self._current_items:
-            if u'' == val:
+            if u'' == val and item.has_key(self._attribute):
                 item.pop(self._attribute)
             else:
                 item[self._attribute] = val
