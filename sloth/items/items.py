@@ -109,7 +109,7 @@ class BaseItem(QAbstractGraphicsShapeItem):
             if c is not None:
                 self.setColor(c)
                 return
-        self.setColor(Qt.yellow)
+        self.setColor((Qt.yellow, Qt.NoBrush))
 
     def onDataChanged(self, indexFrom, indexTo):
         # FIXME why is this not updated, when changed graphically via attribute box ?
